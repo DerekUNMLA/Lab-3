@@ -1,0 +1,743 @@
+<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lab 3 – Microscope Techniques • Tutorial + Practice Quiz + Pre‑Lab</title>
+  <meta name="x-poe-datastore-behavior" content="local_only">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; frame-src 'self'; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <style>
+    :root{ --bg:#0b1020; --panel:#141a32; --muted:#9bb0ff; --text:#e9edff; --accent:#6be675; --accent2:#6bd1e6; --warn:#ffb84d; --danger:#ff6666; --ok:#66ffcc; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 100% -20%, #1b2450 0%, rgba(27,36,80,0) 60%),
+        radial-gradient(1000px 600px at -10% 120%, #1a2c3f 0%, rgba(26,44,63,0) 60%),
+        var(--bg);
+      line-height:1.5;
+    }
+    header{position:sticky; top:0; z-index:10; background:linear-gradient(180deg, rgba(20,26,50,0.95), rgba(20,26,50,0.75)); backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,0.08)}
+    .wrap{max-width:1000px; margin:0 auto; padding:0 16px}
+    .nav{display:flex; align-items:center; gap:12px; padding:12px 0; flex-wrap:wrap}
+    .brand{display:flex; gap:10px; align-items:center; font-weight:800}
+    .logo{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background:conic-gradient(from 200deg, #6be675, #3fca89, #6bd1e6, #9bb0ff, #6be675); color:#00140a; font-weight:900}
+    .spacer{flex:1}
+    .progress{display:flex; gap:10px; align-items:center; min-width:200px}
+    .bar{position:relative; height:8px; flex:1; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden}
+    .bar i{position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg, var(--accent), var(--accent2))}
+    .pct{color:var(--muted); font-weight:700; font-variant-numeric:tabular-nums}
+    main{padding:24px 0 80px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:18px; box-shadow:0 10px 40px rgba(0,0,0,0.35)}
+    h1{margin:.2em 0 .4em; font-size:1.7rem}
+    h2{margin:.2em 0 .4em; font-size:1.25rem; color:var(--muted)}
+    h3{margin:.6rem 0 .4rem; font-size:1.1rem}
+    p{margin:.4em 0}
+    ul{margin:.5em 0 .5em 1.2em} li{margin:.25em 0}
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px; font-size:.8rem; background:rgba(107,214,230,0.12); color:var(--muted); border:1px solid rgba(255,255,255,0.08)}
+    .panel{background:var(--panel); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:16px}
+    .cta{display:flex; gap:8px; flex-wrap:wrap}
+    button{-webkit-tap-highlight-color:transparent; appearance:none; border:none; cursor:pointer; background:linear-gradient(180deg, #79f08a, #3fca89); color:#062012; padding:10px 14px; border-radius:12px; font-weight:800; box-shadow:0 6px 18px rgba(121,240,138,.25)}
+    button.secondary{background:linear-gradient(180deg, #6bd1e6, #3ca6c4); color:#06161d; box-shadow:0 6px 18px rgba(107,209,230,.25)}
+    button.ghost{background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.12); box-shadow:none}
+    .screen{display:none}
+    .screen.active{display:block}
+    .navtabs{display:flex; gap:8px; flex-wrap:wrap; margin:.2rem 0 .6rem}
+    .navtabs button{padding:8px 12px; border-radius:10px; font-weight:700; font-size:.95rem; background:rgba(255,255,255,0.04); color:var(--text); border:1px solid rgba(255,255,255,0.08)}
+    .navtabs button.active{background:linear-gradient(180deg, #6be675, #3fca89); color:#072013; border-color:transparent; box-shadow:0 6px 18px rgba(121,240,138,.25)}
+    .slide{display:none; animation:.35s fade ease}
+    .slide.active{display:block}
+    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+    .q{margin:.8rem 0; padding:.6rem .6rem .2rem; border-radius:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08)}
+    .q h4{margin:0 0 .4rem; font-size:1rem}
+    .choices{display:grid; gap:6px}
+    .choice{display:flex; gap:10px; align-items:flex-start; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02)}
+    .choice input{margin-top:2px}
+    .feedback{margin:.4rem 0 .1rem; font-weight:700; display:none}
+    .feedback.ok{color:var(--ok)}
+    .feedback.no{color:var(--danger)}
+    .pager{display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:10px}
+    .page-info{color:var(--muted); font-weight:700}
+    .callout{border-left:4px solid var(--accent2); padding:10px 12px; background:rgba(107,209,230,0.08); border-radius:8px; margin:.6em 0}
+    .callout.warn{border-left-color:var(--warn); background:rgba(255,184,77,0.08)}
+    .quiz-controls{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    footer{color:var(--muted); text-align:center; padding:30px 0 60px}
+    .kbd{border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); border-bottom-width:3px; padding:2px 6px; border-radius:6px; font-weight:700; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+    .celebrate,.encourage{border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:16px; margin-top:14px}
+    .celebrate{background:linear-gradient(180deg, rgba(107,230,117,0.12), rgba(107,209,230,0.12))}
+    .encourage{background:linear-gradient(180deg, rgba(255,184,77,0.12), rgba(255,102,102,0.10))}
+    /* Pre‑Lab + Certificate + Validation */
+    .prelab-field{width:100%; padding:12px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.28); background:rgba(255,255,255,0.10); color:var(--text); font-weight:600}
+    .prelab-field::placeholder{color:#cfd6ff}
+    .cert{border:2px solid #fff; border-radius:16px; padding:18px; background:rgba(255,255,255,0.04); margin-top:16px}
+    textarea.prelab-field{min-height:90px; resize:vertical}
+    .two-col{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    .tip{font-size:.9rem; color:#cfe2ff}
+    .ex{background:rgba(255,255,255,0.03); border:1px dashed rgba(255,255,255,0.15); padding:10px; border-radius:10px}
+    .error-panel{display:none; border-left:4px solid var(--danger); background:rgba(255,102,102,0.10); padding:10px 12px; border-radius:8px; margin:.6em 0; color:#ffd3d3}
+    .error-panel ul{margin:.4em 0 .2em 1.2em}
+    .error-highlight{outline:2px solid var(--danger); outline-offset:2px}
+    @media (max-width:780px){ .two-col{grid-template-columns:1fr} }
+    @media (max-width:420px){h1{font-size:1.35rem}.logo{width:32px; height:32px}.nav{gap:8px}}
+    @media print{
+      header, .cta, .pager, .quiz-controls, .navtabs, .progress, footer, .error-panel { display:none !important; }
+      body{background:#fff; color:#000}
+      .card{box-shadow:none; border:1px solid #000}
+    }
+  </style>
+  <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.bd4eeeb8e8e02052ee92.js"></script>
+<script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.bd4eeeb8e8e02052ee92.js"></script></head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">MT</div>
+          <div>
+            <div>Lab 3 – Microscope Techniques</div>
+            <div class="pill">Biology 1140L • UNM-LA</div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="progress" aria-label="Progress">
+          <div class="bar" aria-hidden="true"><i id="progressFill"></i></div>
+          <div class="pct" id="progressPct">0%</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Screen 1: Welcome -->
+    <section id="welcomeScreen" class="screen active">
+      <section class="card">
+        <h1>Welcome to Lab 3: Microscope Techniques</h1>
+        <p>Learn safe handling, identify parts and functions of compound and stereomicroscopes, practice focusing and magnification, and understand field of view, image inversion, illumination, and parfocality. Then complete a Practice Quiz and a 5‑question Pre‑Lab to generate your certificate.</p>
+        <div class="panel">
+          <h2>What you’ll practice</h2>
+          <ul>
+            <li>Safe handling and cleaning (lens paper only)</li>
+            <li>Compound microscope parts and magnification (total mag = ocular × objective)</li>
+            <li>Focusing workflow: start at 4X, coarse then fine, switch to 10X/40X using fine focus</li>
+            <li>Field of view, image inversion, and diaphragms/condensers</li>
+            <li>Stereomicroscope basics: binocular 3‑D view, top vs bottom lighting</li>
+          </ul>
+          <div class="callout"><strong>Tip:</strong> Always start with the 4X scanning objective, center and focus, then move to higher power while watching from the side to avoid striking the slide.</div>
+        </div>
+        <div class="cta" style="margin-top:10px">
+          <button id="startBtn" type="button">Start Tutorial</button>
+          <button class="secondary" id="resumeBtn" type="button" style="display:none">Resume</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- Screen 2: Menu + Slides -->
+    <section id="menuScreen" class="screen">
+      <section class="card">
+        <h2>Select a page</h2>
+        <div class="navtabs" id="menuTabs"></div>
+        <div class="pager" style="margin-top:0">
+          <button id="backToWelcome" class="ghost" type="button">← Back to Welcome</button>
+          <span class="pill">Tip: Use ← → keys or tap Next</span>
+          <button id="goToFirst" class="secondary" type="button">Go to Page 1 →</button>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:16px">
+        <div id="slides"></div>
+        <div class="pager">
+          <button id="prevBtn" class="ghost" type="button" disabled="">← Back</button>
+          <div class="page-info" id="pageInfo">Page 1 of 9</div>
+          <button id="nextBtn" type="button">Next →</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- Screen 3: Practice Quiz -->
+    <section id="quizScreen" class="screen">
+      <section class="card" style="margin-top:16px">
+        <h2>Practice Quiz: 10 Questions</h2>
+        <p>Score 80% or higher to unlock the Pre‑Lab.</p>
+        <div id="quiz"></div>
+        <div class="quiz-controls">
+          <button id="submitQuiz" type="button">Submit Practice Quiz</button>
+          <button class="ghost" id="retryQuiz" type="button" style="display:none">Retry</button>
+          <span id="quizScore" class="pill" style="display:none"></span>
+        </div>
+
+        <div id="celebration" class="celebrate" style="display:none">
+          <h3>Great work! You’re ready for the Pre‑Lab 🔬</h3>
+          <p>You scored 80% or higher. Remember: start at 4X, coarse focus first, then fine; at 40X use fine focus only.</p>
+          <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap">
+            <button id="toPrelab" class="secondary" type="button">Continue to Pre‑Lab →</button>
+            <button id="reviewLessons" class="ghost" type="button">Review Lessons</button>
+            <button id="retakeQuiz" class="ghost" type="button">Retake Practice Quiz</button>
+          </div>
+        </div>
+
+        <div id="encouragement" class="encourage" style="display:none">
+          <h3>Keep going—you’ve got this!</h3>
+          <p>Review handling, magnification math, image inversion, diaphragm/illumination, and stereoscope lighting, then try again.</p>
+          <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap">
+            <button id="reviewFromEncourage" class="ghost" type="button">Review Lessons</button>
+            <button id="retakeFromEncourage" class="secondary" type="button">Retake Practice Quiz</button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Screen 4: Pre‑Lab (5 multiple choice only) -->
+    <section id="prelabScreen" class="screen">
+      <section class="card" style="margin-top:16px">
+        <h2>Pre‑Lab: Microscope Techniques (5 pts)</h2>
+        <p>Answer all five multiple‑choice questions. After you submit, your answers will display and you’ll receive a completion certificate to begin the lab.</p>
+
+        <div id="prelabError" class="error-panel">
+          <strong>Please complete the following before submitting:</strong>
+          <ul id="errorList"></ul>
+        </div>
+
+        <div class="panel" style="margin-bottom:10px">
+          <div class="two-col">
+            <div>
+              <label>Your Name</label><br>
+              <input id="plName" class="prelab-field" placeholder="First Last" autocomplete="name">
+            </div>
+            <div>
+              <label>Date</label><br>
+              <input id="plDate" class="prelab-field" type="date">
+            </div>
+          </div>
+        </div>
+
+        <form id="prelabForm" novalidate="">
+          <div class="q">
+            <h4>1) Total magnification when using a 10X ocular and the 40X objective is:</h4>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="q1" value="40X"> 40X</label>
+              <label class="choice"><input type="radio" name="q1" value="100X"> 100X</label>
+              <label class="choice"><input type="radio" name="q1" value="400X"> 400X</label>
+              <label class="choice"><input type="radio" name="q1" value="50X"> 50X</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h4>2) When using the 40X objective on a compound microscope, which focus knob should you use?</h4>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="q2" value="Coarse focus only"> Coarse focus only</label>
+              <label class="choice"><input type="radio" name="q2" value="Fine focus only"> Fine focus only</label>
+              <label class="choice"><input type="radio" name="q2" value="Both coarse and fine heavily"> Both coarse and fine heavily</label>
+              <label class="choice"><input type="radio" name="q2" value="No focusing needed"> No focusing needed</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h4>3) The image in a compound microscope moves ______ when you move the slide to the right.</h4>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="q3" value="Right"> Right</label>
+              <label class="choice"><input type="radio" name="q3" value="Left"> Left</label>
+              <label class="choice"><input type="radio" name="q3" value="Up"> Up</label>
+              <label class="choice"><input type="radio" name="q3" value="Does not move"> Does not move</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h4>4) Stereomicroscopes are best described as:</h4>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="q4" value="Monocular, 2D view"> Monocular, 2D view</label>
+              <label class="choice"><input type="radio" name="q4" value="Binocular, 3D view with top/bottom lighting"> Binocular, 3D view with top/bottom lighting</label>
+              <label class="choice"><input type="radio" name="q4" value="Oil immersion only"> Oil immersion only</label>
+              <label class="choice"><input type="radio" name="q4" value="Higher max magnification than compound"> Higher max magnification than compound</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h4>5) Parfocal lenses mean that when you switch from 4X to 10X:</h4>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="q5" value="You must refocus completely with coarse"> You must refocus completely with coarse</label>
+              <label class="choice"><input type="radio" name="q5" value="The slide must be recentered every time"> The slide must be recentered every time</label>
+              <label class="choice"><input type="radio" name="q5" value="The specimen stays nearly in focus; minor fine focus only"> The specimen stays nearly in focus; minor fine focus only</label>
+              <label class="choice"><input type="radio" name="q5" value="Image becomes brighter automatically"> Image becomes brighter automatically</label>
+            </div>
+          </div>
+
+          <div class="quiz-controls">
+            <button type="submit" id="submitPrelab">Submit Pre‑Lab</button>
+            <button type="button" id="resetPrelab" class="ghost">Clear</button>
+          </div>
+        </form>
+
+        <div id="prelabResults" class="panel" style="display:none; margin-top:12px">
+          <h3>Your Pre‑Lab Answers</h3>
+          <ul id="answersList" style="margin-left:1.2em"></ul>
+          <div class="cert">
+            <h3 style="margin-top:0">Certificate of Completion – Microscope Techniques Pre‑Lab</h3>
+            <p><strong>Name:</strong> <span id="certName">—</span></p>
+            <p><strong>Date:</strong> <span id="certDate">—</span></p>
+            <p><strong>Status:</strong> Completed the Lab 3 Microscope Techniques Pre‑Lab and is authorized to begin the Microscope Techniques Lab.</p>
+            <div class="callout warn" style="margin-top:10px">
+              Save your answers and certificate: Right‑click → Print → Save as PDF. Then upload the PDF to Canvas.
+            </div>
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap">
+              <button id="reviewLessonsFromPrelab" class="ghost" type="button">Review Lessons</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      <p>Pro tip: Press <span class="kbd">←</span> and <span class="kbd">→</span> to navigate pages. Your progress is saved in your browser.</p>
+    </footer>
+  </main>
+
+  <script>
+    // Error logging
+    window.addEventListener('error', e => console.error('Script error:', e.message, e.filename, e.lineno, e.colno));
+
+    // Tutorial pages adapted from Lab 3 - Microscope Techniques
+    const PAGE_CONTENT = [
+      {
+        title:"Handling & Care",
+        html: '<h2>Handle microscopes with care</h2><div class="two-col"><div><ul><li>Carry with two hands: one on the arm, one supporting the base.</li><li>Keep stage dry; clean lenses with lens paper only (wipe in one direction).</li><li>Avoid jarring the instrument; align objectives so they click into place.</li></ul><div class="callout"><strong>Never</strong> use tissues or your shirt on lenses—only lens paper.</div></div><div class="ex"><h3>Why it matters</h3><p>Dirty or scratched lenses make images blurry even if focus is correct.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q0" value="b"> Use only lens paper to clean lenses.</label><label class="choice"><input type="radio" name="q0" value="a"> Paper towels are fine for objectives.</label></div><div class="feedback" data-for="q0"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Parts: Ocular & Objectives",
+        html: '<h2>Ocular, objectives, and total magnification</h2><div class="two-col"><div><ul><li>Ocular (eyepiece) = 10X.</li><li>Objectives on revolving nosepiece: 4X (scanning), 10X (low/medium), 40X (high).</li><li>Total magnification = ocular × objective (e.g., 10×40 = 400X).</li></ul></div><div class="ex"><h3>Example</h3><p>With 10X ocular and 10X objective, total magnification is 100X.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q1" value="b"> 10X ocular × 40X objective = 400X total.</label><label class="choice"><input type="radio" name="q1" value="a"> 10X ocular × 40X objective = 40X total.</label></div><div class="feedback" data-for="q1"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Focusing Workflow",
+        html: '<h2>Start at 4X, then increase</h2><div class="two-col"><div><ol><li>Begin with 4X scanning objective; center specimen and focus with coarse, then fine.</li><li>Switch to 10X; only minor fine focus needed.</li><li>Switch to 40X watching from the side to avoid hitting the slide; use fine focus only.</li></ol><p class="tip">Our scopes are parfocal: once focused at 4X, higher powers are nearly in focus.</p></div><div class="ex"><h3>Safety</h3><p>At 40X, avoid the coarse knob to prevent crashing into the slide.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q2" value="b"> Use fine focus only at 40X; watch from the side when switching.</label><label class="choice"><input type="radio" name="q2" value="a"> Use coarse focus aggressively at 40X.</label></div><div class="feedback" data-for="q2"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Field of View & Inversion",
+        html: '<h2>What you see and how it moves</h2><div class="two-col"><div><ul><li>Field of view shrinks as magnification increases (40X shows less than 4X).</li><li>Image inversion with compound scopes: moving slide right makes image move left, and vice versa; also inverted vertically.</li></ul></div><div class="ex"><h3>“e” slide</h3><p>At 40X, you see only a small part of the letter; image appears inverted.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q3" value="b"> Increasing magnification reduces field of view.</label><label class="choice"><input type="radio" name="q3" value="a"> Field of view increases with magnification.</label></div><div class="feedback" data-for="q3"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Illumination: Condenser & Diaphragm",
+        html: '<h2>Control brightness and contrast</h2><div class="two-col"><div><ul><li>Condenser focuses light on the specimen.</li><li>Diaphragm controls the amount of light (aperture).</li><li>Use more light for high power or low‑contrast samples; reduce light to enhance contrast when necessary.</li></ul></div><div class="ex"><h3>Tip</h3><p>If details wash out, try a smaller diaphragm opening to boost contrast.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q4" value="b"> Adjusting the diaphragm can improve contrast.</label><label class="choice"><input type="radio" name="q4" value="a"> Light level does not affect visibility.</label></div><div class="feedback" data-for="q4"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Parfocal Lenses",
+        html: '<h2>Minimal refocusing when switching</h2><div class="two-col"><div><p>Parfocal means lenses are designed to stay nearly in focus when changing objectives. After focusing at 4X, you should need only minor fine focus at 10X/40X.</p></div><div class="ex"><h3>Practical</h3><p>Center and focus well at 4X before moving up, so the specimen remains in view.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q5" value="b"> Switching objectives requires only minor fine focus.</label><label class="choice"><input type="radio" name="q5" value="a"> You must refocus from scratch each time.</label></div><div class="feedback" data-for="q5"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Stereomicroscope Basics",
+        html: '<h2>3‑D viewing and flexible lighting</h2><div class="two-col"><div><ul><li>Binocular eyepieces provide a 3‑D view from slightly different angles.</li><li>Top (reflected) light for opaque/thick specimens; bottom (transmitted) light for transparent samples.</li><li>Lower maximum magnification than compound microscopes.</li></ul></div><div class="ex"><h3>Examples</h3><p>Colored sugar/salt crystals: try top vs bottom light to reveal surface vs interior features.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q6" value="b"> Stereoscopes give a 3‑D view and allow top/bottom illumination.</label><label class="choice"><input type="radio" name="q6" value="a"> Stereoscopes are monocular and use oil immersion.</label></div><div class="feedback" data-for="q6"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Comparing Movement",
+        html: '<h2>Slide vs dish movement</h2><div class="two-col"><div><ul><li>Compound scope: image moves opposite the slide.</li><li>Stereoscope: image movement matches specimen movement.</li></ul></div><div class="ex"><h3>Try it</h3><p>Move the specimen dish to the right under the stereoscope—the image moves right.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q7" value="b"> Under a stereoscope, moving the dish right makes the image move right.</label><label class="choice"><input type="radio" name="q7" value="a"> Under a stereoscope, image always moves left.</label></div><div class="feedback" data-for="q7"></div></div>',
+        answer:"b"
+      },
+      {
+        title:"Putting It Together",
+        html: '<h2>Common pitfalls and best practices</h2><div class="two-col"><div><ul><li>Always center at 4X before increasing magnification.</li><li>Watch the objective from the side when switching to 40X.</li><li>Adjust diaphragm for contrast; clean lenses only with lens paper.</li></ul></div><div class="ex"><h3>Safety check</h3><p>Never use coarse focus at 40X to avoid ramming the slide.</p></div></div><div class="q"><h4>Quick check</h4><div class="choices"><label class="choice"><input type="radio" name="q8" value="b"> Avoid coarse focus at 40X; center specimen at 4X first.</label><label class="choice"><input type="radio" name="q8" value="a"> Jump straight to 40X and use coarse focus.</label></div><div class="feedback" data-for="q8"></div></div>',
+        answer:"b"
+      }
+    ];
+
+    // Practice quiz (10 questions)
+    const QUIZ = [
+      { q:"Carrying a microscope safely involves:", choices:["Holding by the objective only","Two hands: one on arm, one supporting base","Tilting it sideways to walk","Holding it by the cord"], a:1 },
+      { q:"Total magnification with a 10X ocular and 10X objective is:", choices:["10X","20X","100X","400X"], a:2 },
+      { q:"When switching to 40X objective on a compound microscope, you should:", choices:["Use coarse focus mainly","Use fine focus only and watch from the side","Turn off the light","Remove the slide"], a:1 },
+      { q:"As magnification increases, the field of view:", choices:["Increases","Stays the same","Decreases","Becomes square"], a:2 },
+      { q:"Image inversion in a compound scope means that moving the slide right makes the image move:", choices:["Right","Left","Up","Nowhere"], a:1 },
+      { q:"The diaphragm primarily controls:", choices:["Magnification","Focus","Light/contrast","Stage movement"], a:2 },
+      { q:"Parfocal lenses are designed so that when changing objectives:", choices:["The specimen stays nearly in focus","You must refocus from scratch","The image brightness doubles","The image rotates 90°"], a:0 },
+      { q:"Stereomicroscopes are:", choices:["Monocular and 2‑D","Binocular with 3‑D view; allow top/bottom lighting","Higher magnification than compound scopes","Only for transparent specimens"], a:1 },
+      { q:"Under a stereoscope, moving the specimen dish to the right makes the image move:", choices:["Left","Right","Up","Down"], a:1 },
+      { q:"Which cleaning method is correct for microscope lenses?", choices:["Shirt sleeve","Paper towel","Lens paper only","Cotton swab with tap water"], a:2 }
+    ];
+
+    const state = {
+      current: 0,
+      answers: {},
+      quizAnswers: Array(QUIZ.length).fill(null),
+      quizPassed: false,
+      // Pre‑Lab state: Only name, date, and 5 MC responses
+      prelab: { name:'', date:'', q1:null,q2:null,q3:null,q4:null,q5:null }
+    };
+
+    // DOM
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const menuScreen = document.getElementById('menuScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const prelabScreen = document.getElementById('prelabScreen');
+
+    const menuTabs = document.getElementById('menuTabs');
+    const slidesEl = document.getElementById('slides');
+    const startBtn = document.getElementById('startBtn');
+    const resumeBtn = document.getElementById('resumeBtn');
+    const backToWelcomeBtn = document.getElementById('backToWelcome');
+    const goToFirstBtn = document.getElementById('goToFirst');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pageInfo = document.getElementById('pageInfo');
+    const progressFill = document.getElementById('progressFill');
+    const progressPct = document.getElementById('progressPct');
+
+    const quizEl = document.getElementById('quiz');
+    const submitQuizBtn = document.getElementById('submitQuiz');
+    const retryQuizBtn = document.getElementById('retryQuiz');
+    const quizScoreEl = document.getElementById('quizScore');
+    const celebration = document.getElementById('celebration');
+    const encouragement = document.getElementById('encouragement');
+    const reviewLessonsBtn = document.getElementById('reviewLessons');
+    const retakeQuizBtn = document.getElementById('retakeQuiz');
+    const reviewFromEncourageBtn = document.getElementById('reviewFromEncourage');
+    const retakeFromEncourageBtn = document.getElementById('retakeFromEncourage');
+    const toPrelabBtn = document.getElementById('toPrelab');
+
+    // Pre‑Lab DOM
+    const prelabForm = document.getElementById('prelabForm');
+    const plName = document.getElementById('plName');
+    const plDate = document.getElementById('plDate');
+    const resetPrelabBtn = document.getElementById('resetPrelab');
+    const prelabResults = document.getElementById('prelabResults');
+    const answersList = document.getElementById('answersList');
+    const certName = document.getElementById('certName');
+    const certDate = document.getElementById('certDate');
+    const errorPanel = document.getElementById('prelabError');
+    const errorList = document.getElementById('errorList');
+    const reviewLessonsFromPrelabBtn = document.getElementById('reviewLessonsFromPrelab');
+
+    // Helpers
+    function showScreen(which){
+      [welcomeScreen, menuScreen, quizScreen, prelabScreen].forEach(s=> s && s.classList.remove('active'));
+      if(which) which.classList.add('active');
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+    function buildMenu(){
+      menuTabs.innerHTML = '';
+      PAGE_CONTENT.forEach((p, idx)=>{
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = (idx+1)+'. '+p.title;
+        b.addEventListener('click', ()=> goTo(idx));
+        menuTabs.appendChild(b);
+      });
+    }
+    function buildSlides(){
+      slidesEl.innerHTML = '';
+      PAGE_CONTENT.forEach((p, idx)=>{
+        const s = document.createElement('div');
+        s.className = 'slide';
+        s.dataset.index = String(idx);
+        s.innerHTML = p.html;
+        slidesEl.appendChild(s);
+      });
+      wireQuickChecks();
+      updateActive();
+    }
+    function wireQuickChecks(){
+      PAGE_CONTENT.forEach((p, i)=>{
+        const name = 'q'+i;
+        const inputs = slidesEl.querySelectorAll('input[name="'+name+'"]');
+        inputs.forEach(inp=>{
+          inp.addEventListener('change', ()=>{
+            state.answers[name] = inp.value;
+            const fb = slidesEl.querySelector('.feedback[data-for="'+name+'"]');
+            if(fb){
+              fb.style.display = 'block';
+              if(inp.value === p.answer){
+                fb.textContent = 'Correct! ✔';
+                fb.className = 'feedback ok';
+                setTimeout(()=>{
+                  if(i < PAGE_CONTENT.length-1) goTo(i+1);
+                  else goToPracticeQuiz();
+                  updateProgress();
+                }, 450);
+              } else {
+                fb.textContent = 'Try again.';
+                fb.className = 'feedback no';
+              }
+            }
+            updateProgress();
+          });
+        });
+      });
+    }
+    function goTo(idx){
+      state.current = Math.max(0, Math.min(PAGE_CONTENT.length-1, idx));
+      updateActive();
+    }
+    function updateActive(){
+      const slides = Array.from(slidesEl.children);
+      slides.forEach((el, i)=> el.classList.toggle('active', i === state.current));
+      const tabs = Array.from(menuTabs.children);
+      tabs.forEach((b, i)=> b.classList.toggle('active', i === state.current));
+      prevBtn.disabled = state.current === 0;
+      pageInfo.textContent = 'Page ' + (state.current + 1) + ' of ' + PAGE_CONTENT.length;
+      updateProgress();
+      resumeBtn.style.display = (state.current>0 || Object.keys(state.answers).length>0) ? 'inline-flex' : 'none';
+    }
+    function updateProgress(){
+      let correct = 0;
+      for(let i=0;i<PAGE_CONTENT.length;i++){
+        if(state.answers['q'+i] === PAGE_CONTENT[i].answer) correct++;
+      }
+      const pct = Math.round(100 * correct / PAGE_CONTENT.length);
+      progressFill.style.width = pct + '%';
+      progressPct.textContent = pct + '%';
+    }
+    function buildQuiz(){
+      quizEl.innerHTML = '';
+      QUIZ.forEach((item, idx)=>{
+        const q = document.createElement('div');
+        q.className = 'q';
+        const h = document.createElement('h4');
+        h.textContent = (idx+1)+') '+item.q;
+        q.appendChild(h);
+        const choices = document.createElement('div');
+        choices.className = 'choices';
+        item.choices.forEach((c, ci)=>{
+          const label = document.createElement('label');
+          label.className = 'choice';
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = 'quiz-'+idx;
+          input.value = String(ci);
+          input.addEventListener('change', ()=>{ state.quizAnswers[idx] = ci; });
+          const span = document.createElement('span');
+          span.textContent = c;
+          label.appendChild(input); label.appendChild(span);
+          choices.appendChild(label);
+        });
+        q.appendChild(choices);
+        quizEl.appendChild(q);
+      });
+    }
+    function goToPracticeQuiz(){
+      if(!quizEl.children.length) buildQuiz();
+      showScreen(quizScreen);
+    }
+
+    // Start/Resume
+    startBtn.addEventListener('click', ()=>{
+      buildMenu();
+      buildSlides();
+      showScreen(menuScreen);
+      goTo(0);
+    });
+    resumeBtn.addEventListener('click', ()=>{
+      buildMenu();
+      buildSlides();
+      showScreen(menuScreen);
+      updateActive();
+    });
+    backToWelcomeBtn.addEventListener('click', ()=> showScreen(welcomeScreen));
+    goToFirstBtn.addEventListener('click', ()=>{ showScreen(menuScreen); goTo(0); });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(state.current >= PAGE_CONTENT.length - 1) goToPracticeQuiz();
+      else goTo(state.current+1);
+    });
+    prevBtn.addEventListener('click', ()=> goTo(state.current-1));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e)=>{
+      if(!menuScreen.classList.contains('active')) return;
+      if(e.key === 'ArrowRight'){ nextBtn.click(); }
+      if(e.key === 'ArrowLeft'){ prevBtn.click(); }
+    });
+
+    // Quiz actions
+    submitQuizBtn.addEventListener('click', ()=>{
+      let correct = 0, answered = 0;
+      for(let i=0;i<QUIZ.length;i++){
+        const sel = state.quizAnswers[i];
+        if(sel !== undefined && sel !== null){ answered++; }
+        if(sel === QUIZ[i].a){ correct++; }
+      }
+      const pct = Math.round(100 * correct / QUIZ.length);
+      quizScoreEl.textContent = 'Score: '+correct+'/'+QUIZ.length+' ('+pct+'%)';
+      quizScoreEl.style.display = 'inline-flex';
+      retryQuizBtn.style.display = 'inline-flex';
+      const passed = pct >= 80;
+      state.quizPassed = passed;
+      celebration.style.display = passed ? 'block' : 'none';
+      encouragement.style.display = passed ? 'none' : 'block';
+      if(answered < QUIZ.length){
+        alert('You answered '+answered+'/'+QUIZ.length+'. Please complete all questions for best results.');
+      }
+    });
+
+    retryQuizBtn.addEventListener('click', ()=>{
+      if(!confirm('Clear your Practice Quiz answers and try again?')) return;
+      state.quizAnswers = Array(QUIZ.length).fill(null);
+      quizScoreEl.style.display = 'none';
+      celebration.style.display = 'none';
+      encouragement.style.display = 'none';
+      retryQuizBtn.style.display = 'none';
+      buildQuiz();
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+
+    if(toPrelabBtn){
+      toPrelabBtn.addEventListener('click', ()=>{
+        if(state.quizPassed) showScreen(prelabScreen);
+        else alert('Please score 80%+ on the Practice Quiz to unlock the Pre‑Lab.');
+      });
+    }
+    if(reviewLessonsBtn) reviewLessonsBtn.addEventListener('click', ()=> showScreen(menuScreen));
+    if(retakeQuizBtn){
+      retakeQuizBtn.addEventListener('click', ()=>{
+        state.quizAnswers = Array(QUIZ.length).fill(null);
+        celebration.style.display = 'none';
+        encouragement.style.display = 'none';
+        quizScoreEl.style.display = 'none';
+        retryQuizBtn.style.display = 'none';
+        buildQuiz();
+        window.scrollTo({ top:0, behavior:'smooth' });
+      });
+    }
+    if(reviewFromEncourageBtn) reviewFromEncourageBtn.addEventListener('click', ()=> showScreen(menuScreen));
+    if(retakeFromEncourageBtn){
+      retakeFromEncourageBtn.addEventListener('click', ()=>{
+        state.quizAnswers = Array(QUIZ.length).fill(null);
+        encouragement.style.display = 'none';
+        quizScoreEl.style.display = 'none';
+        retryQuizBtn.style.display = 'none';
+        buildQuiz();
+        window.scrollTo({ top:0, behavior:'smooth' });
+      });
+    }
+
+    // Pre‑Lab binding (5 MC only)
+    function hydratePrelabInputs(){
+      plName.value = state.prelab.name || '';
+      plDate.value = state.prelab.date || '';
+    }
+    plName.addEventListener('input', ()=> state.prelab.name = plName.value);
+    plDate.addEventListener('change', ()=> state.prelab.date = plDate.value);
+
+    prelabForm.addEventListener('input', (e)=>{
+      const t = e.target;
+      if(!t.name) return;
+      state.prelab[t.name] = t.value;
+      // Remove highlight on input
+      t.classList.remove('error-highlight');
+      if(t.type === 'radio'){
+        const group = t.closest('.choices');
+        if(group) group.classList.remove('error-highlight');
+      }
+    });
+
+    // Validation utility
+    function validatePrelab(){
+      const missing = [];
+      // Clear previous highlights
+      prelabForm.querySelectorAll('.error-highlight').forEach(el=> el.classList.remove('error-highlight'));
+
+      const req = (ok, label, selectorToHighlight) => {
+        if(!ok){
+          missing.push(label);
+          const el = prelabForm.querySelector(selectorToHighlight);
+          if(el) el.classList.add('error-highlight');
+        }
+      };
+
+      req(!!state.prelab.name?.trim(), 'Name', '#plName');
+      req(!!state.prelab.date, 'Date', '#plDate');
+
+      for(let i=1;i<=5;i++){
+        const val = state.prelab['q'+i];
+        req(!!val, 'Q'+i, '.q:nth-of-type('+ (i) +') .choices');
+      }
+
+      return missing;
+    }
+
+    function showValidationErrors(missing){
+      errorList.innerHTML = '';
+      missing.forEach(m=>{
+        const li = document.createElement('li');
+        li.textContent = m;
+        errorList.appendChild(li);
+      });
+      errorPanel.style.display = 'block';
+
+      const first = errorList.firstChild?.textContent || null;
+      if(first){
+        const map = {
+          'Name':'#plName', 'Date':'#plDate',
+          'Q1':'.q:nth-of-type(1) .choices input', 'Q2':'.q:nth-of-type(2) .choices input', 'Q3':'.q:nth-of-type(3) .choices input',
+          'Q4':'.q:nth-of-type(4) .choices input', 'Q5':'.q:nth-of-type(5) .choices input'
+        };
+        const sel = map[first];
+        const el = sel ? document.querySelector(sel) : null;
+        if(el && typeof el.focus === 'function') el.focus();
+        errorPanel.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+    }
+
+    prelabForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      errorPanel.style.display = 'none';
+      errorList.innerHTML = '';
+
+      const missing = validatePrelab();
+      if(missing.length){
+        showValidationErrors(missing);
+        return;
+      }
+
+      // Render answers
+      answersList.innerHTML = '';
+      function add(label, val){
+        const li=document.createElement('li');
+        li.innerHTML = '<strong>'+label+':</strong> '+(val||'—');
+        answersList.appendChild(li);
+      }
+      add('Q1 Total magnification', state.prelab.q1);
+      add('Q2 Focus at 40X', state.prelab.q2);
+      add('Q3 Image movement', state.prelab.q3);
+      add('Q4 Stereoscope description', state.prelab.q4);
+      add('Q5 Parfocal meaning', state.prelab.q5);
+
+      certName.textContent = state.prelab.name || '—';
+      certDate.textContent = state.prelab.date || '—';
+      prelabResults.style.display = 'block';
+
+      prelabResults.scrollIntoView({ behavior:'smooth', block:'start' });
+      alert('Pre‑Lab complete! Right‑click → Print → Save as PDF, then upload your PDF (answers + certificate) to Canvas.');
+    });
+
+    resetPrelabBtn.addEventListener('click', ()=>{
+      state.prelab = { name:'', date:'', q1:null,q2:null,q3:null,q4:null,q5:null };
+      prelabForm.reset();
+      hydratePrelabInputs();
+      prelabResults.style.display = 'none';
+      errorPanel.style.display = 'none';
+      errorList.innerHTML = '';
+      prelabForm.querySelectorAll('.error-highlight').forEach(el=> el.classList.remove('error-highlight'));
+      prelabForm.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+
+    // Init
+    function init(){
+      buildMenu();
+      buildSlides();
+      buildQuiz();
+      updateProgress();
+      hydratePrelabInputs();
+      resumeBtn.style.display = (state.current>0 || Object.keys(state.answers).length>0) ? 'inline-flex' : 'none';
+    }
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+
+
+</body></html>
